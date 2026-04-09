@@ -1,0 +1,40 @@
+private void button1_Click(object sender, EventArgs e)
+{
+    // 1. Данные
+    string text = textBox1.Text;
+    int n = int.Parse(textBox2.Text);
+
+    // 2. Запуск Word
+    Word.Application app = new Word.Application();
+    app.Visible = true;
+
+    // 3. Путь к шаблону (как в методичке!)
+    string path = Environment.CurrentDirectory + "\\Шаблоны\\Шаблон.docx";
+
+    // 4. Открываем документ
+    Word.Document doc = app.Documents.Open(path);
+
+    // 5. Замена текста
+    doc.Content.Find.Execute("{TEXT}", ReplaceWith: text, Replace: Word.WdReplace.wdReplaceAll);
+    doc.Content.Find.Execute("{DATE}", ReplaceWith: DateTime.Now.ToString(), Replace: Word.WdReplace.wdReplaceAll);
+
+    // 6. Добавляем параграф (как в методичке)
+    var paragraph = doc.Paragraphs.Add();
+    var range = paragraph.Range;
+
+    // 7. Заголовок таблицы
+    range.Text = "Таблица 1 — Задания\n";
+
+    // 8. Создание таблицы
+    Word.Table table = doc.Tables.Add(range, n + 1, 2);
+
+    // 9. Заголовки
+    table.Cell(1, 1).Range.Text = "№";
+    table.Cell(1, 2).Range.Text = "Текст";
+
+    // 10. Заполнение
+    for (int i = 1; i <= n; i++)
+    {
+        table.Cell(i + 1, 1).Range.Text = i.ToString();
+    }
+}
