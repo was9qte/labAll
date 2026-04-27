@@ -1,40 +1,24 @@
-private void button1_Click(object sender, EventArgs e)
-{
-    // 1. Данные
-    string text = textBox1.Text;
-    int n = int.Parse(textBox2.Text);
+<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Подписка" Height="250" Width="350">
+    <StackPanel Margin="10">
 
-    // 2. Запуск Word
-    Word.Application app = new Word.Application();
-    app.Visible = true;
+        <TextBlock Text="Логин:"/>
+        <TextBox Name="LoginBox" Margin="0,5,0,10"/>
 
-    // 3. Путь к шаблону (как в методичке!)
-    string path = Environment.CurrentDirectory + "\\Шаблоны\\Шаблон.docx";
+        <TextBlock Text="Email:"/>
+        <TextBox Name="EmailBox" Margin="0,5,0,10"/>
 
-    // 4. Открываем документ
-    Word.Document doc = app.Documents.Open(path);
+        <CheckBox Name="AgreeCheckBox"
+                  Content="Я согласен на получение рассылки"
+                  Checked="AgreeCheckBox_Checked"
+                  Unchecked="AgreeCheckBox_Checked"
+                  Margin="0,10"/>
 
-    // 5. Замена текста
-    doc.Content.Find.Execute("{TEXT}", ReplaceWith: text, Replace: Word.WdReplace.wdReplaceAll);
-    doc.Content.Find.Execute("{DATE}", ReplaceWith: DateTime.Now.ToString(), Replace: Word.WdReplace.wdReplaceAll);
-
-    // 6. Добавляем параграф (как в методичке)
-    var paragraph = doc.Paragraphs.Add();
-    var range = paragraph.Range;
-
-    // 7. Заголовок таблицы
-    range.Text = "Таблица 1 — Задания\n";
-
-    // 8. Создание таблицы
-    Word.Table table = doc.Tables.Add(range, n + 1, 2);
-
-    // 9. Заголовки
-    table.Cell(1, 1).Range.Text = "№";
-    table.Cell(1, 2).Range.Text = "Текст";
-
-    // 10. Заполнение
-    for (int i = 1; i <= n; i++)
-    {
-        table.Cell(i + 1, 1).Range.Text = i.ToString();
-    }
-}
+        <Button Name="SubscribeButton"
+                Content="Подписаться"
+                IsEnabled="False"
+                Height="30"/>
+    </StackPanel>
+</Window>
