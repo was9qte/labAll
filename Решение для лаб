@@ -1,39 +1,51 @@
-   <StackPanel Margin="10">
+   WpfApp1.MainWindow"
 
-        <TextBlock Text="Логин:"/>
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
 
-        <TextBox Name="LoginBox" Margin="0,5,0,10"/>
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
 
-        <TextBlock Text="Пароль:"/>
+        Title="Размер текста" Height="300" Width="400">
 
-        <!-- Пароль скрытый -->
+    <StackPanel Margin="10">
 
-        <PasswordBox Name="PasswordBox"
+        <!-- Поле ввода -->
 
-                     Margin="0,5,0,5"/>
+        <TextBox Name="InputTextBox"
 
-        <!-- Пароль видимый -->
+                 Height="120"
 
-        <TextBox Name="PasswordTextBox"
+                 TextWrapping="Wrap"
 
-                 Visibility="Collapsed"
+                 AcceptsReturn="True"
 
-                 Margin="0,5,0,5"/>
+                 VerticalScrollBarVisibility="Auto"
 
-        <CheckBox Name="ShowPasswordCheckBox"
+                 Margin="0,0,0,10"/>
 
-                  Content="Показать пароль"
+        <TextBlock Text="Размер текста:" Margin="0,5"/>
 
-                  Checked="ShowPasswordCheckBox_Checked"
+        <!-- Радиокнопки -->
 
-                  Unchecked="ShowPasswordCheckBox_Checked"
+        <StackPanel Orientation="Horizontal">
 
-                  Margin="0,10"/>
+            <RadioButton Content="10"
 
-        <Button Content="Авторизоваться"
+                         Checked="FontSize_Checked"
 
-                Height="30"/>
+                         Margin="5"/>
+
+            <RadioButton Content="20"
+
+                         Checked="FontSize_Checked"
+
+                         Margin="5"/>
+
+            <RadioButton Content="30"
+
+                         Checked="FontSize_Checked"
+
+                         Margin="5"/>
+
+        </StackPanel>
 
     </StackPanel>
-
-</Window>
