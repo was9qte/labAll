@@ -1,51 +1,25 @@
-   WpfApp1.MainWindow"
+   private void FontSize_Checked(object sender, RoutedEventArgs e)
 
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        {
 
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            RadioButton rb = sender as RadioButton;
 
-        Title="Размер текста" Height="300" Width="400">
+            if (rb != null)
 
-    <StackPanel Margin="10">
+            {
 
-        <!-- Поле ввода -->
+                // получаем число из Content
 
-        <TextBox Name="InputTextBox"
+                double size = double.Parse(rb.Content.ToString());
 
-                 Height="120"
+                // применяем к TextBox
 
-                 TextWrapping="Wrap"
+                InputTextBox.FontSize = size;
 
-                 AcceptsReturn="True"
+            }
 
-                 VerticalScrollBarVisibility="Auto"
+        }
 
-                 Margin="0,0,0,10"/>
+    }
 
-        <TextBlock Text="Размер текста:" Margin="0,5"/>
-
-        <!-- Радиокнопки -->
-
-        <StackPanel Orientation="Horizontal">
-
-            <RadioButton Content="10"
-
-                         Checked="FontSize_Checked"
-
-                         Margin="5"/>
-
-            <RadioButton Content="20"
-
-                         Checked="FontSize_Checked"
-
-                         Margin="5"/>
-
-            <RadioButton Content="30"
-
-                         Checked="FontSize_Checked"
-
-                         Margin="5"/>
-
-        </StackPanel>
-
-    </StackPanel>
+}
