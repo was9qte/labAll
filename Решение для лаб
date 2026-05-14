@@ -1,6 +1,47 @@
-<ResourceDictionary
+<Window.Resources>
+
+    <StackPanel>
+        <Label Content="qwerty"/>
+        <TextBox Text="asd"/>
+        <Button x:Name="OpenButton" Content="open"/>
+        <Button x:Name="LightButton" Content="light" Click="LightButton_Click"/>
+        <Button x:Name="DarkButton" Content="dark" Click="DarkButton_Click"/>
+    </StackPanel>
+
+</Window.Resources>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+sourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xm
+
+
+
+
+
+
+
+lns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <Style TargetType="Control">
         <Setter Property="Foreground" Value="#{ArialResource FontColor}"/>
