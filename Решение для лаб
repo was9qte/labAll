@@ -1,4 +1,42 @@
 
+<Style TargetType="Button">
+    
+    <!-- Обычный цвет кнопки -->
+    <Setter Property="Background" Value="LightGray"/>
+
+    <Style.Triggers>
+
+        <!-- При наведении мыши -->
+        <Trigger Property="IsMouseOver" Value="True">
+
+            <!-- Смена фона -->
+            <Setter Property="Background" Value="Blue"/>
+
+        </Trigger>
+
+    </Style.Triggers>
+</Style>
+
+
+
+
+
+
+<Trigger Property="IsMouseOver" Value="True">
+    <Setter Property="Background" Value="Blue"/>
+    <Setter Property="Foreground" Value="White"/>
+</Trigger>
+
+
+
+
+
+
+
+
+
+
+
 <Window.Resources>
 
     <Style TargetType="TextBox">
