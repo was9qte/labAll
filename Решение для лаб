@@ -1,3 +1,29 @@
+private void ChangeTheme(string name)
+{
+    var dictionary = new ResourceDictionary()
+    {
+        Source = new Uri($"/Themes/{name}Colors.xaml", UriKind.Relative)
+    };
+
+    //Application.Current.Resources.MergedDictionaries[0] = dictionary;
+
+    var dictionaries = Application.Current.Resources.MergedDictionaries;
+    var colorTheme = dictionaries
+        .FirstOrDefault(d => d.Source.OriginalString.Contains("colors.xaml"));
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 <Application x:Class="Lection0513.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
