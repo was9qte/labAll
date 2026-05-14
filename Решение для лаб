@@ -1,116 +1,26 @@
-   using System.Net.Http.Json;
-
-namespace ApiServices
-{
-    public class GamesApiService
-    {
-        private readonly HttpClient _httpClient;
-
-        public GamesApiService(HttpClient httpClient)
-        {
-            _httpClient = httpClient;
-        }
-
-        // Получение всех игр
-        public async Task<List<Game>?> GetGamesAsync()
-        {
-            return await _httpClient.GetFromJsonAsync<List<Game>>("api/games");
-        }
-
-        // Получение игры по id
-        public async Task<Game?> GetGameByIdAsync(int id)
-        {
-            return await _httpClient.GetFromJsonAsync<Game>($"api/games/{id}");
-        }
-
-        // Добавление игры
-        public async Task<HttpResponseMessage> AddGameAsync(Game game)
-        {
-            return await _httpClient.PostAsJsonAsync("api/games", game);
-        }
-
-        // Обновление игры
-        public async Task<HttpResponseMessage> UpdateGameAsync(int id, Game game)
-        {
-            return await _httpClient.PutAsJsonAsync($"api/games/{id}", game);
-        }
-
-        // Удаление игры
-        public async Task<HttpResponseMessage> DeleteGameAsync(int id)
-        {
-            return await _httpClient.DeleteAsync($"api/games/{id}");
-        }
-}
-
-
-
-
-namespace ApiServices
-{
-    public class Game
-    {
-        public int Id { get; set; }
-
-        public string Name { get; set; } = string.Empty;
-
-        public decimal Price { get; set; }
-
-        public string Genre { get; set; } = string.Empty;
-
-        public string Description { get; set; } = string.Empty;
-    }
-}
-
-
-
-
-
-
-
-using ApiServices;
-
-HttpClient client = new HttpClient();
-
-client.BaseAddress = new Uri("https://localhost:5001/");
-
-GamesApiService gamesService = new GamesApiService(client);
-
-Console.WriteLine("Список игр:");
-
-var games = await gamesService.GetGamesAsync();
-
-if (games != null)
-{
-    foreach (var game in games)
-    {
-        Console.WriteLine($"{game.Id} | {game.Name} | {game.Price}");
-    }
-}
-
-Console.WriteLine();
-Console.WriteLine("Добавление новой игры...");
-
-Game newGame = new Game
-{
-    Name = "Cyberpunk 2077",
-    Price = 1999,
-    Genre = "RPG",
-    Description = "Футуристическая RPG игра"
-};
-
-await gamesService.AddGameAsync(newGame);
-
-Console.WriteLine("Игра добавлена.");
-
-Console.WriteLine();
-Console.WriteLine("Получение игры по ID:");
-
-var selectedGame = await gamesService.GetGameByIdAsync(1);
-
-if (selectedGame != null)
-{
-    Console.WriteLine($"{selectedGame.Name} - {selectedGame.Price}");
-}
-
-
-
+   -Style TargetType="Control">
+‹Setter Property="Foreground" Value=" (DynamicResource FontColor)" »
+Setter Property="FontFamily" Value="Arial Black" >
+‹Setter
+Property="FontSize" Value="16"/
+-Setter Property="Margin" Value="5"/
+< Style>
+10
+11
+-Style TargetType="Label" BasedOn="{StaticResource {x:Type Control))"s
+12
+13
+Style TargetType="TextBox" BasedOn="{StaticResource (x: Type Control)}""
+14
+15
+16
+ste taer Property: Background Value Statures ace But Contrash s
+17
+</Style>
+18
+19
+20
+21
+‹Style x:Key="CancelButton" TargetType="Button"
+BasedOn="{StaticResource {x:Type Button})">
+‹Setter Property="Background" Value= "Red" s
