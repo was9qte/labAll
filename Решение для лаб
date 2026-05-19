@@ -41,3 +41,77 @@
 
     </Grid>
 </Window>
+
+
+
+
+
+
+
+
+
+
+using System.Collections.Generic;
+using System.Windows;
+
+namespace WpfApp1
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+
+            List<User> users = new List<User>()
+            {
+                new User()
+                {
+                    Address = "Москва",
+                    Login = "admin",
+                    Password = "12345",
+                    Category = "email",
+                    IsArchived = false
+                },
+
+                new User()
+                {
+                    Address = "Казань",
+                    Login = "user1",
+                    Password = "qwerty",
+                    Category = "БД",
+                    IsArchived = true
+                },
+
+                new User()
+                {
+                    Address = "Самара",
+                    Login = "user2",
+                    Password = "11111",
+                    Category = "сайт",
+                    IsArchived = false
+                },
+
+                new User()
+                {
+                    Address = "Томск",
+                    Login = "manager",
+                    Password = "54321",
+                    Category = "email",
+                    IsArchived = true
+                },
+
+                new User()
+                {
+                    Address = "Омск",
+                    Login = "test",
+                    Password = "0000",
+                    Category = "БД",
+                    IsArchived = false
+                }
+            };
+
+            dgUsers.ItemsSource = users;
+        }
+    }
+}
+
