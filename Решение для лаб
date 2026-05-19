@@ -30,3 +30,35 @@
         </ListView>
     </Grid>
 </Window>
+
+
+
+
+
+
+
+
+
+
+using System.Collections.Generic;
+using System.IO;
+using System.Windows;
+
+namespace WpfApp1
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+
+            // Получаем список файлов из папки Documents
+            DirectoryInfo directory = new DirectoryInfo(@"C:\Users\Public\Documents");
+
+            List<FileInfo> files = new List<FileInfo>(directory.GetFiles());
+
+            // Устанавливаем источник данных
+            lvFiles.ItemsSource = files;
+        }
+    }
+}
