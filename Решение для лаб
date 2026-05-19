@@ -1,3 +1,62 @@
+
+using System.Collections.Generic;
+using System.Windows;
+
+namespace Task2
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+
+            List<User> users = new List<User>()
+            {
+                new User()
+                {
+                    Address = "Москва",
+                    Login = "admin",
+                    Password = "12345",
+                    Category = "email",
+                    IsArchived = false
+                },
+
+                new User()
+                {
+                    Address = "Казань",
+                    Login = "user1",
+                    Password = "qwerty",
+                    Category = "БД",
+                    IsArchived = true
+                }
+            };
+
+            dgUsers.ItemsSource = users;
+        }
+    }
+
+    public class User
+    {
+        public string Address { get; set; }
+
+        public string Login { get; set; }
+
+        public string Password { get; set; }
+
+        public string Category { get; set; }
+
+        public bool IsArchived { get; set; }
+    }
+}
+
+
+
+
+
+
+
+
+
 <Window x:Class="WpfApp1.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
