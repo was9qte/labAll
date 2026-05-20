@@ -1,270 +1,72 @@
 
-private void CopyPassword_Click(object sender, RoutedEventArgs e)
-
-        {
-
-            Button button = sender as Button;
-
-            string password = button.Tag.ToString();
-
-            Clipboard.SetText(password);
-
-            MessageBox.Show("Пароль скопирован!");
-
-        }
-
-    }
-
-}
-
-
-
-
-
-
-
-
-<Window x:Class="Task2.MainWindow"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="DataGrid" Height="450" Width="900">
-
-    <Grid>
-
-        <DataGrid Name="dgUsers"
-                  Margin="10"
-                  AutoGenerateColumns="False"
-                  CanUserAddRows="False"
-                  CanUserDeleteRows="False"
-                  AlternatingRowBackground="LightGray"
-                  GridLinesVisibility="Horizontal">
-
-            <DataGrid.Columns>
-
-                <!-- Адрес -->
-                <DataGridHyperlinkColumn Header="Адрес"
-                                         Binding="{Binding Address}"
-                                         Width="*" />
-
-                <!-- Логин -->
-                <DataGridTextColumn Header="Логин"
-                                    Binding="{Binding Login}"
-                                    Width="*" />
-
-                <!-- Скрытый пароль -->
-                <DataGridTextColumn Header="Пароль"
-                                    Binding="{Binding HiddenPassword}"
-                                    IsReadOnly="True"
-                                    Width="*" />
-
-                <!-- Архив -->
-                <DataGridCheckBoxColumn Header="Архивный"
-                                        Binding="{Binding IsArchived}"
-                                        Width="*" />
-
-                <!-- Кнопка -->
-                <DataGridTemplateColumn Header="Действие" Width="150">
-
-                    <DataGridTemplateColumn.CellTemplate>
-
-                        <DataTemplate>
-
-                            <Button Content="Скопировать пароль"
-                                    Click="CopyPassword_Click"
-                                    Tag="{Binding Password}" />
-
-                        </DataTemplate>
-
-                    </DataGridTemplateColumn.CellTemplate>
-
-                </DataGridTemplateColumn>
-
-            </DataGrid.Columns>
-
-        </DataGrid>
-
-    </Grid>
-</Window>
-
-
-
-
-
-
-
-
-using System.Collections.Generic;
-using System.Windows;
-
-namespace Task2
-{
-    public partial class MainWindow : Window
-    {
-        public MainWindow()
-        {
-            InitializeComponent();
-
-            List<User> users = new List<User>()
-            {
-                new User()
-                {
-                    Address = "Москва",
-                    Login = "admin",
-                    Password = "12345",
-                    Category = "email",
-                    IsArchived = false
-                },
-
-                new User()
-                {
-                    Address = "Казань",
-                    Login = "user1",
-                    Password = "qwerty",
-                    Category = "БД",
-                    IsArchived = true
-                }
-            };
-
-            dgUsers.ItemsSource = users;
-        }
-    }
-
-    public class User
-    {
-        public string Address { get; set; }
-
-        public string Login { get; set; }
-
-        public string Password { get; set; }
-
-        public string Category { get; set; }
-
-        public bool IsArchived { get; set; }
-    }
-}
-
-
-
-
-
-
-
-
-
 <Window x:Class="WpfApp1.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="DataGrid" Height="450" Width="900">
+        Title="Текстовый редактор"
+        Height="450"
+        Width="800">
 
-    <Grid>
+    <DockPanel>
 
-        <DataGrid Name="dgUsers"
-                  Margin="10"
-                  AutoGenerateColumns="False"
-                  CanUserAddRows="False"
-                  CanUserDeleteRows="False"
-                  AlternatingRowBackground="LightGray"
-                  GridLinesVisibility="Vertical">
+        <!-- МЕНЮ -->
+        <Menu DockPanel.Dock="Top">
 
-            <DataGrid.Columns>
+            <!-- ФАЙЛ -->
+            <MenuItem Header="Файл">
 
-                <DataGridTextColumn Header="Адрес"
-                                    Binding="{Binding Address}"
-                                    Width="*" />
+                <MenuItem Header="Создать"
+                          Click="Create_Click"
+                          InputGestureText="Ctrl+N"/>
 
-                <DataGridTextColumn Header="Логин"
-                                    Binding="{Binding Login}"
-                                    Width="*" />
+                <MenuItem Header="Открыть"
+                          Click="Open_Click"
+                          InputGestureText="Ctrl+O"/>
 
-                <DataGridTextColumn Header="Пароль"
-                                    Binding="{Binding Password}"
-                                    Width="*" />
+                <MenuItem Header="Сохранить"
+                          Click="Save_Click"
+                          InputGestureText="Ctrl+S"/>
 
-                <DataGridTextColumn Header="Категория"
-                                    Binding="{Binding Category}"
-                                    Width="*" />
+                <Separator/>
 
-                <DataGridCheckBoxColumn Header="Архивный"
-                                        Binding="{Binding IsArchived}"
-                                        Width="*" />
+                <MenuItem Header="Выход"
+                          Click="Exit_Click"/>
 
-            </DataGrid.Columns>
+            </MenuItem>
 
-        </DataGrid>
+            <!-- ВИД -->
+            <MenuItem Header="Вид">
 
-    </Grid>
+                <MenuItem x:Name="statusMenu"
+                          Header="Строка состояния"
+                          IsCheckable="True"
+                          IsChecked="True"
+                          Click="statusMenu_Click"/>
+
+            </MenuItem>
+
+            <!-- СПРАВКА -->
+            <MenuItem Header="Справка">
+
+                <MenuItem Header="О программе"
+                          Click="About_Click"/>
+
+            </MenuItem>
+
+        </Menu>
+
+        <!-- СТРОКА СОСТОЯНИЯ -->
+        <StatusBar x:Name="statusBar"
+                   DockPanel.Dock="Bottom">
+
+            <TextBlock Text="Готово"/>
+
+        </StatusBar>
+
+        <!-- ТЕКСТ -->
+        <TextBox x:Name="txtBox"
+                 AcceptsReturn="True"
+                 VerticalScrollBarVisibility="Auto"
+                 HorizontalScrollBarVisibility="Auto"/>
+
+    </DockPanel>
 </Window>
-
-
-
-
-
-
-
-
-
-
-using System.Collections.Generic;
-using System.Windows;
-
-namespace WpfApp1
-{
-    public partial class MainWindow : Window
-    {
-        public MainWindow()
-        {
-            InitializeComponent();
-
-            List<User> users = new List<User>()
-            {
-                new User()
-                {
-                    Address = "Москва",
-                    Login = "admin",
-                    Password = "12345",
-                    Category = "email",
-                    IsArchived = false
-                },
-
-                new User()
-                {
-                    Address = "Казань",
-                    Login = "user1",
-                    Password = "qwerty",
-                    Category = "БД",
-                    IsArchived = true
-                },
-
-                new User()
-                {
-                    Address = "Самара",
-                    Login = "user2",
-                    Password = "11111",
-                    Category = "сайт",
-                    IsArchived = false
-                },
-
-                new User()
-                {
-                    Address = "Томск",
-                    Login = "manager",
-                    Password = "54321",
-                    Category = "email",
-                    IsArchived = true
-                },
-
-                new User()
-                {
-                    Address = "Омск",
-                    Login = "test",
-                    Password = "0000",
-                    Category = "БД",
-                    IsArchived = false
-                }
-            };
-
-            dgUsers.ItemsSource = users;
-        }
-    }
-}
-
