@@ -70,3 +70,75 @@
 
     </DockPanel>
 </Window>
+
+
+
+
+
+
+
+
+using Microsoft.Win32;
+using System.IO;
+using System.Windows;
+
+namespace WpfApp1
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        // СОЗДАТЬ
+        private void Create_Click(object sender, RoutedEventArgs e)
+        {
+            txtBox.Clear();
+        }
+
+        // ОТКРЫТЬ
+        private void Open_Click(object sender, RoutedEventArgs e)
+        {
+            OpenFileDialog open = new OpenFileDialog();
+
+            if (open.ShowDialog() == true)
+            {
+                txtBox.Text = File.ReadAllText(open.FileName);
+            }
+        }
+
+        // СОХРАНИТЬ
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            SaveFileDialog save = new SaveFileDialog();
+
+            if (save.ShowDialog() == true)
+            {
+                File.WriteAllText(save.FileName, txtBox.Text);
+            }
+        }
+
+        // ВЫХОД
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        // СТРОКА СОСТОЯНИЯ
+        private void statusMenu_Click(object sender, RoutedEventArgs e)
+        {
+            if (statusMenu.IsChecked)
+                statusBar.Visibility = Visibility.Visible;
+            else
+                statusBar.Visibility = Visibility.Hidden;
+        }
+
+        // СПРАВКА
+        private void About_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Текстовый редактор");
+        }
+    }
+}
+
