@@ -1,3 +1,40 @@
+using Microsoft.Win32;
+using System;
+using System.ComponentModel;
+using System.Windows;
+
+namespace LabWork35
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
+
+        // твои OpenButton_Click и SaveButton_Click
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show(
+                "Вы хотите закрыть приложение?",
+                "Подтверждение",
+                MessageBoxButton.YesNo,
+                MessageBoxImage.Question);
+
+            if (result != MessageBoxResult.Yes)
+            {
+                e.Cancel = true;
+            }
+
+            base.OnClosing(e);
+        }
+    }
+}
+
+
+
+
 
 private void Window_KeyDown(object sender, KeyEventArgs e)
 {
