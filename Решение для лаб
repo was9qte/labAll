@@ -1,4 +1,32 @@
-<Window x:Class="WpfApp.ConfirmWindow"
+
+private void Yes_Click(object sender, RoutedEventArgs e)
+{
+    DialogResult = true;
+}
+
+
+using System.ComponentModel;
+
+public MainWindow()
+{
+    InitializeComponent();
+    Closing += CloseApp;
+}
+
+private void CloseApp(object sender, CancelEventArgs e)
+{
+    if (new ConfirmWindow().ShowDialog() != true)
+        e.Cancel = true;
+}
+
+
+
+
+<
+
+
+
+Window x:Class="WpfApp.ConfirmWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         Title="Подтверждение"
         Height="150"
