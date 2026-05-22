@@ -1,4 +1,32 @@
+<Window x:Class="WpfApp.ConfirmWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        Title="Подтверждение"
+        Height="150"
+        Width="350"
+        WindowStartupLocation="CenterScreen">
 
+    <StackPanel Margin="20">
+
+        <TextBlock Text="Вы хотите закрыть приложение?"
+                   FontSize="18"
+                   Margin="0 0 0 20"/>
+
+        <StackPanel Orientation="Horizontal">
+
+            <Button Content="Да"
+                    Width="80"
+                    Margin="10"
+                    Click="Yes_Click"/>
+
+            <Button Content="Нет"
+                    Width="80"
+                    Margin="10"/>
+
+        </StackPanel>
+
+    </StackPanel>
+
+</Window>
 
 
 
