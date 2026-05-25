@@ -1,4 +1,47 @@
 
+
+
+public partial class PlaceholderTextBox : UserControl
+{
+    public event RoutedEventHandler ContentChanged;
+
+    public string Text
+    {
+        get { return (string)GetValue(TextProperty); }
+        set { SetValue(TextProperty, value); }
+    }
+
+    // Using a DependencyProperty as the backing store for Text.
+    // This enables animation, styling, binding, etc...
+    public static readonly DependencyProperty TextProperty =
+        DependencyProperty.Register(
+            "Text",
+            typeof(string),
+            typeof(ownerClass),
+            new PropertyMetadata(0));
+
+    public PlaceholderTextBox()
+    {
+        InitializeComponent();
+    }
+
+    private void ContentTextBox_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        if (ContentTextBox.Text == "")
+            HintTextBlock.Visibility = Visibility.Visible;
+        else
+            HintTextBlock.Visibility = Visibility.Collapsed;
+    }
+}
+
+
+
+
+
+
+
+
+
 private void Yes_Click(object sender, RoutedEventArgs e)
 {
     DialogResult = true;
