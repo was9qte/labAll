@@ -1,3 +1,318 @@
+<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:local="clr-namespace:WpfApp1"
+        Title="Главное окно"
+        Height="450"
+        Width="700">
+
+    <Window.Resources>
+
+        <Style x:Key="MyRadioStyle" TargetType="RadioButton">
+
+            <Setter Property="Template">
+                <Setter.Value>
+
+                    <ControlTemplate TargetType="RadioButton">
+
+                        <Border x:Name="br"
+                                Background="{TemplateBinding Background}"
+                                CornerRadius="10"
+                                Margin="5"
+                                Padding="10">
+
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"/>
+
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter TargetName="br"
+                                        Property="Background"
+                                        Value="Blue"/>
+                            </Trigger>
+
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="br"
+                                        Property="Background"
+                                        Value="Gray"/>
+                            </Trigger>
+
+                        </ControlTemplate.Triggers>
+
+                    </ControlTemplate>
+
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+
+    </Window.Resources>
+
+    <StackPanel>
+
+        <!-- Меню -->
+        <RadioButton Content="Пункт 1"
+                     Background="LightBlue"
+                     Style="{StaticResource MyRadioStyle}"
+                     Checked="RadioButton_Checked"/>
+
+        <RadioButton Content="Пункт 2"
+                     Background="LightBlue"
+                     Style="{StaticResource MyRadioStyle}"
+                     Checked="RadioButton_Checked"/>
+
+        <RadioButton Content="Пункт 3"
+                     Background="LightBlue"
+                     Style="{StaticResource MyRadioStyle}"
+                     Checked="RadioButton_Checked"/>
+
+        <RadioButton Content="Пункт 4"
+                     Background="LightBlue"
+                     Style="{StaticResource MyRadioStyle}"
+                     Checked="RadioButton_Checked"/>
+
+        <RadioButton Content="Пункт 5"
+                     Background="LightBlue"
+                     Style="{StaticResource MyRadioStyle}"
+                     Checked="RadioButton_Checked"/>
+
+        <!-- Часы -->
+        <local:ClockControl Margin="10"/>
+
+        <!-- Счётчик -->
+        <local:CounterControl x:Name="counter"
+                              ValueChanged="counter_ValueChanged"/>
+
+        <TextBlock x:Name="txt"
+                   FontSize="20"
+                   Margin="10"/>
+
+    </StackPanel>
+
+</Window>
+
+
+
+
+
+
+using System.Windows;
+using System.Windows.Controls;
+
+namespace WpfApp1
+{
+    public partial class MainWindow : Window
+    {
+        public MainWindow()
+        {
+            InitializeComponent();
+
+            counter.MaxValue = 5;
+        }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            RadioButton rb = sender as RadioButton;
+
+            Title = rb.Content.ToString();
+        }
+
+        private void counter_ValueChanged(object sender, RoutedEventArgs e)
+        {
+            txt.Text = "Количество: " + counter.Value;
+        }
+    }
+}
+
+
+
+
+
+
+<UserControl x:Class="WpfApp1.ClockControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <TextBlock x:Name="timeText"
+               FontSize="30"
+               Margin="10"/>
+</UserControl>
+
+
+
+
+
+
+
+
+using System;
+using System.Windows.Controls;
+using System.Windows.Threading;
+
+namespace WpfApp1
+{
+    public partial class ClockControl : UserControl
+    {
+        DispatcherTimer timer = new DispatcherTimer();
+
+        public ClockControl()
+        {
+            InitializeComponent();
+
+            timer.Interval = TimeSpan.FromSeconds(1);
+
+            timer.Tick += Timer_Tick;
+
+            timer.Start();
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            timeText.Text = DateTime.Now.ToString("HH:mm:ss");
+        }
+    }
+}
+
+
+
+
+
+
+<UserControl x:Class="WpfApp1.CounterControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <StackPanel Orientation="Horizontal">
+
+        <Button Content="-"
+                Width="40"
+                Click="ButtonMinus_Click"/>
+
+        <TextBox x:Name="tb"
+                 Width="50"
+                 Text="0"/>
+
+        <Button Content="+"
+                Width="40"
+                Click="ButtonPlus_Click"/>
+
+    </StackPanel>
+
+</UserControl>
+
+
+
+
+
+
+
+using System;
+using System.Windows;
+using System.Windows.Controls;
+
+namespace WpfApp1
+{
+    public partial class CounterControl : UserControl
+    {
+        public event RoutedEventHandler ValueChanged;
+
+        public int MaxValue { get; set; }
+
+        public int Value
+        {
+            get
+            {
+                return Convert.ToInt32(tb.Text);
+            }
+        }
+
+        public CounterControl()
+        {
+            InitializeComponent();
+        }
+
+        private void ButtonPlus_Click(object sender, RoutedEventArgs e)
+        {
+            if (Value < MaxValue)
+            {
+                tb.Text = (Value + 1).ToString();
+
+                ValueChanged?.Invoke(this, new RoutedEventArgs());
+            }
+        }
+
+        private void ButtonMinus_Click(object sender, RoutedEventArgs e)
+        {
+            if (Value > 0)
+            {
+                tb.Text = (Value - 1).ToString();
+
+                ValueChanged?.Invoke(this, new RoutedEventArgs());
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
