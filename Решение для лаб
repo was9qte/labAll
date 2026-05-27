@@ -1,3 +1,338 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<ContentPage
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    x:Class="FileFilterApp.FilesPage">
+
+    <ScrollView>
+
+        <VerticalStackLayout Padding="10"
+                             Spacing="10">
+
+            <!-- ===================================================== -->
+            <!-- 3.1 ФИЛЬТРАЦИЯ ПО ИМЕНИ -->
+            <!-- ===================================================== -->
+
+            <Label Text="Фильтрация по имени файла"
+                   FontSize="18"
+                   FontAttributes="Bold"/>
+
+            <Entry x:Name="SearchEntry"
+                   Placeholder="Введите часть имени файла"
+                   TextChanged="SearchEntry_TextChanged"/>
+
+            <Button Text="Сбросить фильтр"
+                    Clicked="ResetButton_Clicked"/>
+
+            <Label x:Name="CountLabel"
+                   Text="Показано 0 из 0 записей"
+                   FontAttributes="Bold"/>
+
+
+            <!-- ===================================================== -->
+            <!-- 3.2 ФИЛЬТРАЦИЯ ПО РАЗМЕРУ -->
+            <!-- ===================================================== -->
+
+            <Label Text="Фильтрация по размеру"
+                   FontSize="18"
+                   FontAttributes="Bold"/>
+
+            <Entry x:Name="SizeEntry"
+                   Placeholder="Введите размер файла"
+                   Keyboard="Numeric"
+                   TextChanged="SizeFilter_Changed"/>
+
+            <RadioButton x:Name="GreaterRadio"
+                         Content="Больше или равно"
+                         CheckedChanged="SizeFilter_Changed"/>
+
+            <RadioButton x:Name="LessRadio"
+                         Content="Меньше или равно"
+                         CheckedChanged="SizeFilter_Changed"/>
+
+            <RadioButton x:Name="AllRadio"
+                         Content="Все файлы"
+                         IsChecked="True"
+                         CheckedChanged="SizeFilter_Changed"/>
+
+
+            <!-- ===================================================== -->
+            <!-- 3.3 ФИЛЬТРАЦИЯ ПО НЕСКОЛЬКИМ УСЛОВИЯМ -->
+            <!-- ===================================================== -->
+
+            <Label Text="Фильтрация по диапазону"
+                   FontSize="18"
+                   FontAttributes="Bold"/>
+
+            <HorizontalStackLayout Spacing="10">
+
+                <CheckBox x:Name="MinCheckBox"
+                          CheckedChanged="MultiFilter_Changed"/>
+
+                <Entry x:Name="MinEntry"
+                       WidthRequest="180"
+                       Placeholder="Минимальный размер"
+                       Keyboard="Numeric"
+                       TextChanged="MultiFilter_Changed"/>
+
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Spacing="10">
+
+                <CheckBox x:Name="MaxCheckBox"
+                          CheckedChanged="MultiFilter_Changed"/>
+
+                <Entry x:Name="MaxEntry"
+                       WidthRequest="180"
+                       Placeholder="Максимальный размер"
+                       Keyboard="Numeric"
+                       TextChanged="MultiFilter_Changed"/>
+
+            </HorizontalStackLayout>
+
+
+            <!-- ===================================================== -->
+            <!-- СПИСОК ФАЙЛОВ -->
+            <!-- ===================================================== -->
+
+            <ListView x:Name="FilesListView"
+                      HasUnevenRows="True">
+
+                <ListView.ItemTemplate>
+
+                    <DataTemplate>
+
+                        <ViewCell>
+
+                            <Frame Margin="5"
+                                   Padding="10">
+
+                                <VerticalStackLayout Spacing="5">
+
+                                    <Label Text="{Binding Name}"
+                                           FontSize="18"
+                                           FontAttributes="Bold"/>
+
+                                    <Label Text="{Binding Extension,
+                                           StringFormat='Расширение: {0}'}"/>
+
+                                    <Label Text="{Binding FullPath,
+                                           StringFormat='Путь: {0}'}"
+                                           LineBreakMode="WordWrap"/>
+
+                                    <Label Text="{Binding Size,
+                                           StringFormat='Размер: {0} байт'}"/>
+
+                                    <Label Text="{Binding Created,
+                                           StringFormat='Дата создания: {0}'}"/>
+
+                                    <Label Text="{Binding Modified,
+                                           StringFormat='Дата изменения: {0}'}"/>
+
+                                </VerticalStackLayout>
+
+                            </Frame>
+
+                        </ViewCell>
+
+                    </DataTemplate>
+
+                </ListView.ItemTemplate>
+
+            </ListView>
+
+        </VerticalStackLayout>
+
+    </ScrollView>
+
+</ContentPage>
+
+
+
+
+
+
+
+
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+
+namespace FileFilterApp;
+
+public partial class FilesPage : ContentPage
+{
+    private List<FileItem> allFiles = new();
+
+    public FilesPage()
+    {
+        InitializeComponent();
+
+        LoadFiles(@"C:\Test");
+    }
+
+    // =========================================================
+    // ЗАГРУЗКА ФАЙЛОВ
+    // =========================================================
+
+    private void LoadFiles(string path)
+    {
+        DirectoryInfo directory = new DirectoryInfo(path);
+
+        allFiles = directory.GetFiles()
+            .Select(f => new FileItem
+            {
+                Name = f.Name,
+                Extension = f.Extension,
+                FullPath = f.FullName,
+                Size = f.Length,
+                Created = f.CreationTime,
+                Modified = f.LastWriteTime
+            })
+            .ToList();
+
+        FilesListView.ItemsSource = allFiles;
+
+        CountLabel.Text =
+            $"Показано {allFiles.Count} из {allFiles.Count} записей";
+    }
+
+    // =========================================================
+    // 3.1 ФИЛЬТРАЦИЯ ПО ИМЕНИ ФАЙЛА
+    // =========================================================
+
+    private void SearchEntry_TextChanged(object sender,
+        TextChangedEventArgs e)
+    {
+        string text = SearchEntry.Text?.ToLower() ?? "";
+
+        var result = allFiles
+            .Where(f => f.Name.ToLower().Contains(text))
+            .ToList();
+
+        FilesListView.ItemsSource = result;
+
+        CountLabel.Text =
+            $"Показано {result.Count} из {allFiles.Count} записей";
+    }
+
+    // =========================================================
+    // СБРОС ФИЛЬТРА
+    // =========================================================
+
+    private void ResetButton_Clicked(object sender, EventArgs e)
+    {
+        SearchEntry.Text = "";
+
+        FilesListView.ItemsSource = allFiles;
+
+        CountLabel.Text =
+            $"Показано {allFiles.Count} из {allFiles.Count} записей";
+    }
+
+    // =========================================================
+    // 3.2 ФИЛЬТРАЦИЯ С RadioButton
+    // =========================================================
+
+    private async void SizeFilter_Changed(object sender, EventArgs e)
+    {
+        long size = 0;
+
+        long.TryParse(SizeEntry.Text, out size);
+
+        IEnumerable<FileItem> result = allFiles;
+
+        if (GreaterRadio.IsChecked)
+        {
+            result = result.Where(f => f.Size >= size);
+        }
+        else if (LessRadio.IsChecked)
+        {
+            result = result.Where(f => f.Size <= size);
+        }
+
+        var list = result.ToList();
+
+        FilesListView.ItemsSource = list;
+
+        CountLabel.Text =
+            $"Показано {list.Count} из {allFiles.Count} записей";
+
+        if (!list.Any())
+        {
+            await DisplayAlert(
+                "Информация",
+                "Подходящих файлов не найдено",
+                "OK");
+        }
+    }
+
+    // =========================================================
+    // 3.3 ФИЛЬТРАЦИЯ ПО НЕСКОЛЬКИМ УСЛОВИЯМ
+    // =========================================================
+
+    private async void MultiFilter_Changed(object sender, EventArgs e)
+    {
+        IEnumerable<FileItem> result = allFiles;
+
+        // Минимальный размер
+
+        if (MinCheckBox.IsChecked)
+        {
+            long min = 0;
+
+            long.TryParse(MinEntry.Text, out min);
+
+            result = result.Where(f => f.Size >= min);
+        }
+
+        // Максимальный размер
+
+        if (MaxCheckBox.IsChecked)
+        {
+            long max = 0;
+
+            long.TryParse(MaxEntry.Text, out max);
+
+            result = result.Where(f => f.Size <= max);
+        }
+
+        var list = result.ToList();
+
+        FilesListView.ItemsSource = list;
+
+        CountLabel.Text =
+            $"Показано {list.Count} из {allFiles.Count} записей";
+
+        if (!list.Any())
+        {
+            await DisplayAlert(
+                "Информация",
+                "Файлы не найдены",
+                "OK");
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <Window x:Class="WpfApp1.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
