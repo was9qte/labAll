@@ -1,3 +1,35 @@
+
+
+
+
+
+
+
+
+
+
+namespace FileFilterApp;
+
+public class FileItem
+{
+    public string Name { get; set; }
+
+    public string Extension { get; set; }
+
+    public string FullPath { get; set; }
+
+    public long Size { get; set; }
+
+    public DateTime Created { get; set; }
+
+    public DateTime Modified { get; set; }
+}
+
+
+
+
+
+
 <?xml version="1.0" encoding="utf-8" ?>
 
 <ContentPage
