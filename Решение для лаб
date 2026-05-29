@@ -1,6 +1,126 @@
 
 
-   <VerticalStackLayout Padding="20" Spacing="10">
+
+
+
+
+
+
+
+
+
+
+<Window x:Class="PR5.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Games" Height="450" Width="800">
+
+    <Grid Margin="10">
+        <DataGrid x:Name="gamesGrid"
+                  AutoGenerateColumns="False"
+                  ItemsSource="{Binding Games}"
+                  SelectedItem="{Binding SelectedGame}"
+                  IsReadOnly="False">
+
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID"
+                                    Binding="{Binding IdGame}" />
+
+                <DataGridTextColumn Header="Название"
+                                    Binding="{Binding Name}" />
+
+                <DataGridTextColumn Header="Описание"
+                                    Binding="{Binding Description}" />
+
+                <DataGridTextColumn Header="Категория"
+                                    Binding="{Binding Category}" />
+
+                <DataGridTextColumn Header="Цена"
+                                    Binding="{Binding Price}" />
+
+                <DataGridTextColumn Header="Скидка"
+                                    Binding="{Binding Sale}" />
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
+
+
+
+
+
+
+
+
+
+
+using System.Collections.ObjectModel;
+using System.Windows;
+
+namespace PR5
+{
+    public partial class MainWindow : Window
+    {
+        public ObservableCollection<Game> Games { get; set; }
+
+        public Game SelectedGame { get; set; }
+
+        public MainWindow()
+        {
+            InitializeComponent();
+
+            Games = new ObservableCollection<Game>()
+            {
+                new Game{ IdGame = 1, Name = "Tetris", Category = "головоломка", Price = 150 },
+                new Game{ IdGame = 2, Name = "Flappy Bird", Description = "игра про летучую птицу", Category = "платформер", Price = 10 },
+                new Game{ IdGame = 3, Name = "Pac-man", Description = "игра про колобка", Category = "аркада", Price = 300 },
+                new Game{ IdGame = 4, Name = "Arkanoid", Category = "аркада", Price = 400 },
+                new Game{ IdGame = 5, Name = "Mario", Description = "игра про Марио", Category = "платформер", Price = 1000 }
+            };
+
+            DataContext = this;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+namespace PR5
+{
+    public class Game
+    {
+        public int IdGame { get; set; }
+
+        public string Name { get; set; }
+
+        public string Description { get; set; }
+
+        public string Category { get; set; }
+
+        public double Price { get; set; }
+
+        public double Sale { get; set; } = 0;
+    }
+}
+
+
+
+
+
+
+   
+
+
+
+
+<VerticalStackLayout Padding="20" Spacing="10">
 
         <!-- Фильтр -->
 
