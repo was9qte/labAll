@@ -1,6 +1,28 @@
 
-
 @page
+@model ActionsModel
+
+<h2>Три обработчика</h2>
+
+<form method="get">
+    <button name="handler" value="SayHello">Приветствие</button>
+    <button name="handler" value="ShowTime">Текущее время</button>
+    <button name="handler" value="Reset">Сброс</button>
+</form>
+
+<p>@Model.Message</p>
+
+
+
+
+
+
+
+
+
+
+
+page
 @model ActionsModel
 
 <h2>Три обработчика</h2>
