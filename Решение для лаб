@@ -1,3 +1,111 @@
+
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace WebApplication1.Pages
+{
+    public class SyntaxDemoModel : PageModel
+    {
+        public void OnGet()
+        {
+            ViewBag.Users = new List<string>
+            {
+                "Иван",
+                "Петр",
+                "Анна"
+            };
+
+            ViewData["CurrentDate"] = DateTime.Now;
+        }
+    }
+}
+
+
+
+
+
+@page
+@model SyntaxDemoModel
+
+@{
+    ViewData["Title"] = "Syntax Demo";
+
+    string name = "Дмитрий";
+
+    int hour = DateTime.Now.Hour;
+
+    string htmlText = "<b>Текст через Html.Raw()</b>";
+}
+
+@* Демонстрация конструкций Razor *@
+
+<h1>Syntax Demo</h1>
+
+<h2>Вывод переменной</h2>
+
+<p>Имя: @name</p>
+
+<hr />
+
+<h2>Условный оператор</h2>
+
+@if (hour < 12)
+{
+    <p>Сейчас утро</p>
+}
+else if (hour < 18)
+{
+    <p>Сейчас день</p>
+}
+else
+{
+    <p>Сейчас вечер</p>
+}
+
+<hr />
+
+<h2>Цикл foreach</h2>
+
+<ul>
+@foreach (string user in (List<string>)ViewBag.Users)
+{
+    <li>@user</li>
+}
+</ul>
+
+<hr />
+
+<h2>Блок кода</h2>
+
+@{
+    int a = 5;
+    int b = 10;
+    int sum = a + b;
+}
+
+<p>@a + @b = @sum</p>
+
+<hr />
+
+<h2>Текущая дата (ViewData)</h2>
+
+<p>@ViewData["CurrentDate"]</p>
+
+<hr />
+
+<h2>Html.Raw()</h2>
+
+@Html.Raw(htmlText)
+
+
+
+
+
+
+
+
+
+
+
 @page
 
 @{
