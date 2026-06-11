@@ -1,6 +1,52 @@
 
 
+@page
+@model ActionsModel
 
+<h2>Три обработчика</h2>
+
+<form method="get">
+    <button asp-page-handler="SayHello">Приветствие</button>
+    <button asp-page-handler="ShowTime">Текущее время</button>
+    <button asp-page-handler="Reset">Сброс</button>
+</form>
+
+<p>@Model.Message</p>
+
+
+
+
+
+
+
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace LabWork40.Pages
+{
+    public class ActionsModel : PageModel
+    {
+        public string Message { get; set; }
+
+        public void OnGet()
+        {
+        }
+
+        public void OnGetSayHello()
+        {
+            Message = "Здравствуйте!";
+        }
+
+        public void OnGetShowTime()
+        {
+            Message = DateTime.Now.ToString("dd.MM.yyyy HH:mm:ss");
+        }
+
+        public void OnGetReset()
+        {
+            Message = "";
+        }
+    }
+}
 
 
 
