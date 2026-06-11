@@ -1,4 +1,72 @@
 @page
+
+@{
+    ViewData["Title"] = "О нас";
+}
+
+<h1>О нас</h1>
+
+<p>Лабораторная работа по ASP.NET Core Razor Pages.</p>
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+
+    <header>
+        <h2>Мой сайт</h2>
+
+        <a href="/Index">Главная</a>
+        |
+        <a href="/About">О нас</a>
+
+        <hr />
+    </header>
+
+    @RenderBody()
+
+    <hr />
+
+    <footer>
+        © @DateTime.Now.Year Иванов И.И.
+    </footer>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+page
+
+
+
 @model AboutModel
 
 @{
