@@ -1,5 +1,75 @@
 
 
+
+
+
+
+
+
+
+@page
+@model LabWork40.Pages.CalcModel
+
+<h2>Калькулятор сложения</h2>
+
+<form method="post">
+    <input type="number" asp-for="A" />
+    <input type="number" asp-for="B" />
+
+    <button type="submit">Сложить</button>
+</form>
+
+<p>@Model.Result</p>
+
+
+
+
+
+
+
+
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace LabWork40.Pages
+{
+    public class CalcModel : PageModel
+    {
+        [BindProperty]
+        public int A { get; set; }
+
+        [BindProperty]
+        public int B { get; set; }
+
+        public int Result { get; set; }
+
+        public void OnPost()
+        {
+            Result = A + B;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 public void OnGet(string? name, int? age)
 {
     if (name == null || age == null)
