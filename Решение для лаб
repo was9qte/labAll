@@ -1,4 +1,70 @@
 
+
+
+
+
+
+
+
+
+@page
+@model YourProject.Pages.LinksDemoModel
+
+<h2 id="top">Links Demo</h2>
+
+<h3>Ссылки</h3>
+
+<ul>
+    <li>
+        <a asp-page="/Index">На главную страницу (Index)</a>
+    </li>
+
+    <li>
+        <a asp-page="/About">На страницу About</a>
+    </li>
+
+    <li>
+        <a asp-page="/Privacy" asp-route-id="5">
+            На страницу Privacy (id=5)
+        </a>
+    </li>
+
+    <li>
+        <a href="#top">Перейти к началу страницы</a>
+    </li>
+</ul>
+
+<hr />
+
+<h3>Информация из контекста страницы</h3>
+
+<p>
+    <strong>Путь к текущему файлу:</strong><br />
+    @Model.FilePath
+</p>
+
+<p>
+    <strong>IP-адрес клиента:</strong><br />
+    @Model.IpAddress
+</p>
+
+<p>
+    <strong>Тип запроса:</strong><br />
+    @Model.RequestMethod
+</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace WebApplication1.Pages
