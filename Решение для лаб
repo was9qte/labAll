@@ -1,6 +1,16 @@
 
 
-
+public void OnGet(string? name, int? age)
+{
+    if (name == null || age == null)
+    {
+        Message = "Гость, возраст неизвестен.";
+    }
+    else
+    {
+        Message = "Привет, " + name + "! Тебе " + age + " лет.";
+    }
+}
 
 
 
