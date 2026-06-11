@@ -1,3 +1,81 @@
+@page
+@model AboutModel
+
+@{
+    ViewData["Title"] = "О нас";
+}
+
+<h1>О нас</h1>
+
+<p>Это страница About.</p>
+
+
+
+
+
+
+
+
+
+using Microsoft.AspNetCore.Mvc.RazorPages;
+
+namespace WebApplication1.Pages
+{
+    public class AboutModel : PageModel
+    {
+        public void OnGet()
+        {
+        }
+    }
+}
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <a asp-page="/Index">Главная</a> |
+            <a asp-page="/About">О нас</a>
+        </nav>
+        <hr />
+    </header>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <hr />
+
+    <footer>
+        <p>&copy; @DateTime.Now.Year Иван Иванов</p>
+    </footer>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
 
 @page
 @model ActionsModel
