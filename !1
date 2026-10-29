@@ -1,3 +1,35 @@
+
+CREATE TABLE Журнал_изменений_Email (
+    код_посетителя INT,
+    старый_Email VARCHAR(50),
+    новый_Email VARCHAR(50),
+    дата_изменения DATETIME
+);
+
+
+
+
+
+
+DELIMITER //
+CREATE TRIGGER Visitor_AFTER_UPDATE
+AFTER UPDATE ON Visitor
+FOR EACH ROW
+BEGIN
+    -- Строго по заданию используем NULL-безопасный оператор <=>
+    IF NOT (OLD.Email <=> NEW.Email) THEN
+        INSERT INTO Журнал_изменений_Email (код_посетителя, старый_Email, новый_Email, дата_изменения)
+        VALUES (OLD.Id, OLD.Email, NEW.Email, NOW());
+    END IF;
+END //
+DELIMITER ;
+
+
+
+
+
+
+
 CREATE TABLE Удаленные_посетители (
     Id INT,
     Phone CHAR(10),
