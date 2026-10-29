@@ -1,0 +1,12 @@
+CREATE TABLE Film (
+    Id INT NOT NULL PRIMARY KEY,
+    Title NVARCHAR(255) NOT NULL,          -- Длина обрезана, взял 255
+    Duration SMALLINT NOT NULL,
+    ReleaseYear SMALLINT NOT NULL,
+    Description NVARCHAR(MAX) NULL,        -- Длина обрезана, обычно для описаний используют MAX
+    Poster VARBINARY(MAX) NULL,            -- Длина обрезана, для картинок обычно MAX
+    AgeRating VARCHAR(10) NULL,
+    RenalStart DATE NULL,                  -- (Опечатка в БД, вероятно RentalStart)
+    RenalEnd DATE NULL,                    -- (Опечатка в БД, вероятно RentalEnd)
+    isDeleted BIT NOT NULL                 -- Поле из задания 5.2, тип bit (0 или 1)
+);
