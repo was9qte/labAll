@@ -26,3 +26,16 @@ END
 
 
 
+
+DELIMITER //
+CREATE TRIGGER Film_BEFORE_DELETE
+BEFORE DELETE ON Film
+FOR EACH ROW
+BEGIN
+    SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = 'Требуется выполнить UPDATE для столбца is_deleted';
+END //
+DELIMITER ;
+
+
+
+
